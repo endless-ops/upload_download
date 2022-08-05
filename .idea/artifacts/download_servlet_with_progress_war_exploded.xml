@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="download_servlet_with_progress:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/download_servlet_with_progress_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="download_servlet_with_progress/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="download_servlet_with_progress" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
