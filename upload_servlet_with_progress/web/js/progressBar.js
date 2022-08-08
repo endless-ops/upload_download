@@ -1,7 +1,7 @@
 const upload = function (url, method, params, progress) {
     return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
-        xhr.open("post", url, true);
+        xhr.open(method, url, true);
         //提交表单数据
         xhr.send(params);
 
@@ -22,6 +22,7 @@ const upload = function (url, method, params, progress) {
 
 let uploadBtn = document.getElementById("upload_submit_btn");
 uploadBtn.onClick = function () {
+    console.log("开始上传");
     upload("upload_with_progress_bar_servlet", "POST", function () {
         // 获取文件
         let toUploadFile = document.getElementById("upload");
