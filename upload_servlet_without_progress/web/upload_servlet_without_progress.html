@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <title>基于Servlet的无进度条的文件上传</title>
     <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" href="./css/progress.css" />
 </head>
 <body>
 <div class="upload_pos">
     <div class="upload_wrapper">
         <div class="upload_form">
-            <form action="upload_without_progress" method="post" enctype="multipart/form-data">
+            <form action="upload_without_progress" method="post" enctype="multipart/form-data" id="upload_form" target="unTip">
                 <label for="upload">
                     上传：
                     <input id="upload" class="upload" type="file" name="uploadFileName" placeholder="请输入待上传的文件" value=""/>
@@ -19,8 +20,22 @@
             </form>
         </div>
         <div class="cm_line"></div>
+        <div class="upload_progress_wrapper">
+            <div class="progress_title">
+                <p>进度条：</p>
+            </div>
+            <div class="progress_im">
+                <div class="progress_bottom"></div>
+                <div class="progress_top"></div>
+                <div class="progress_num">
+                    <span class="progress_num_show">0%</span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<iframe name="unTip" src="" style="display: none"></iframe>
 <script type="text/javascript" src="./js/open.js"></script>
+<script type="text/javascript" src="./js/progressBar.js"></script>
 </body>
 </html>

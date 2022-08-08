@@ -25,6 +25,26 @@ public class UploadWithoutProgressServlet extends HttpServlet {
         String submittedFileName = part.getSubmittedFileName();
         System.out.println(submittedFileName);
 
+        String uploadPath = "G:\\upload\\";
+        File file = new File(uploadPath);
+        boolean isMkdir = true;
+        if (!file.exists()) {
+            isMkdir = file.mkdirs();
+        }
+
+        if (isMkdir) {
+            file = new File(uploadPath + createFileName(submittedFileName));
+            part.write(file.getAbsolutePath());
+        } else {
+            System.out.println("创建目录失败！！！");
+        }
+
+    }
+
+    private String createFileName(String oldFileName) {
+        String first = "Upload" + System.currentTimeMillis();
+        String suffix = oldFileName.substring(oldFileName.indexOf("."));
+        return first + suffix;
     }
 
 
