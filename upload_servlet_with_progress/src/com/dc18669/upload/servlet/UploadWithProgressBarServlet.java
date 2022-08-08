@@ -27,7 +27,8 @@ public class UploadWithProgressBarServlet extends HttpServlet {
         }
 
         if (mkdirs) {
-            Part part = req.getPart("uploadFileName");
+            Part part = req.getPart("file");
+            System.out.println(part);
             String oldFileName = part.getSubmittedFileName();
             String newFileName = createFileName(oldFileName);
             file = new File(uploadPath + newFileName);
