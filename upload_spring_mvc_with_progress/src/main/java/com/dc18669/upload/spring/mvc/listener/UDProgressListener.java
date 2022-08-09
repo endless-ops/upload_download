@@ -17,9 +17,10 @@ public class UDProgressListener implements ProgressListener {
 
     /**
      * 更新进度
-     * @param l 已读取了多少个字节
+     *
+     * @param l  已读取了多少个字节
      * @param l1 文件总大小
-     * @param i 已解析到第几个
+     * @param i  已解析到第几个
      */
     @Override
     public void update(long l, long l1, int i) {
@@ -27,24 +28,27 @@ public class UDProgressListener implements ProgressListener {
         Progress progress = new Progress();
 
         // 文件总大小
-
+        progress.setTotalFileSize(l1);
         // 已进行大小
-
+        progress.setSizeDone(l);
         // 剩余大小
-
+        progress.setRemainingSize(0l);
         // 已进行时间
-
+        progress.setPerformedOn(0l);
         // 剩余时间
-
+        progress.setTimeRemaining(0l);
         // 下载速度
-
+        progress.setSpeed("");
         // 百分比
-
-
+        String percentage = String.format("%.2f", ((l * 1.0 / l1) * 100));
+        System.out.println("percentage = " + percentage);
+        progress.setPercentage(percentage + "%");
         // 总耗时
-
+        progress.setTotalTime(0l);
         // 已解析到第几个
+        progress.setCertain(i);
 
+        session.setAttribute("progress", progress);
 
     }
 

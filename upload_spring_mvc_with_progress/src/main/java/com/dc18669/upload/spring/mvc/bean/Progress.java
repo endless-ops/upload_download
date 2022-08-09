@@ -19,8 +19,8 @@ public class Progress {
     // 剩余大小
     private long remainingSize;
 
-    // 下载速度
-    private String downloadSpeed;
+    // 上传下载速度
+    private String speed;
 
     // 百分比
     private String percentage;
@@ -76,12 +76,12 @@ public class Progress {
         this.remainingSize = remainingSize;
     }
 
-    public String getDownloadSpeed() {
-        return downloadSpeed;
+    public String getSpeed() {
+        return speed;
     }
 
-    public void setDownloadSpeed(String downloadSpeed) {
-        this.downloadSpeed = downloadSpeed;
+    public void setSpeed(String speed) {
+        this.speed = speed;
     }
 
     public String getPercentage() {
