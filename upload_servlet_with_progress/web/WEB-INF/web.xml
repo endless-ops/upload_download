@@ -14,6 +14,6 @@
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>upload_servlet_with_progress.html</welcome-file>
+        <welcome-file>upload_servlet_with_progress_jquery.html</welcome-file>
     </welcome-file-list>
 </web-app>
