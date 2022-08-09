@@ -20,7 +20,10 @@
   </properties>
 
   <dependencies>
-
+    <dependency>
+      <groupId>org.</groupId>
+      <artifactId></artifactId>
+    </dependency>
   </dependencies>
 
   <build>
