@@ -1,10 +1,10 @@
 package com.dc18669.upload.spring.mvc.config;
 
+import com.dc18669.upload.spring.mvc.resolver.UDCommonsMultipartResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -18,7 +18,7 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.dc18669.upload.spring.mvc.controller")
+@ComponentScan({"com.dc18669.upload.spring.mvc.controller", "com.dc18669.upload.spring.mvc.listener"})
 public class SpringMvcConfig implements WebMvcConfigurer {
 
     @Override
@@ -28,7 +28,7 @@ public class SpringMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("").setViewName("upload_spring_mvc_without_progress");
+        registry.addViewController("").setViewName("upload_spring_mvc_with_progress");
     }
 
     @Bean
@@ -60,6 +60,7 @@ public class SpringMvcConfig implements WebMvcConfigurer {
 
     @Bean
     public MultipartResolver multipartResolver() {
-        return new StandardServletMultipartResolver();
+
+        return new UDCommonsMultipartResolver();
     }
 }
