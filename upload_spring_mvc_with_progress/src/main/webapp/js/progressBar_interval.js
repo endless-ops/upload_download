@@ -13,6 +13,7 @@ $(function () {
     }
 
     $("#upload_submit_btn").on('click', function () {
+        console.log(new Date().getTime());
         // 获取文件
         let files = $("#upload").files;
         let data = new FormData();

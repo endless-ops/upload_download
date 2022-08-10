@@ -20,6 +20,7 @@ const upload = function (url, method, params, progress) {
 
 let uploadBtn = document.getElementById("upload_submit_btn");
 uploadBtn.onclick = function () {
+    console.log(new Date());
     console.log("开始上传");
     // 获取文件
     let toUploadFile = document.getElementById("upload");
@@ -35,6 +36,7 @@ uploadBtn.onclick = function () {
         let progressTop = document.getElementById("progress_top");
         let progressNumShow = document.getElementById("progress_num_show");
         let width = progressBottom.offsetWidth;
+        console.log("总大小 ： " + e.total + " , 已解析大小 : " + e.loaded);
         let percentage = Math.floor((e.loaded / e.total) * 10000) / 100;
         progressTop.style.width = (width * (percentage / 100)) + 'px';
         progressNumShow.innerText = percentage + '%';

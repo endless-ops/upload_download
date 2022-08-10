@@ -2,22 +2,28 @@ package com.dc18669.upload.spring.mvc.bean;
 
 public class Progress {
     // 总耗时
-    private long totalTime;
+    private String totalTime;
 
     // 已进行时间
-    private long performedOn;
+    private String performedOn;
 
     // 剩余时间
-    private long timeRemaining;
+    private String timeRemaining;
 
     // 文件总大小
     private long totalFileSize;
+    // 文件总大小
+    private String totalSize;
 
     // 已进行大小
     private long sizeDone;
+    // 已进行大小
+    private String doneSize;
 
     // 剩余大小
     private long remainingSize;
+    // 剩余大小
+    private String remainSize;
 
     // 上传下载速度
     private String speed;
@@ -28,27 +34,27 @@ public class Progress {
     // 第几个文件
     private int certain;
 
-    public long getTotalTime() {
+    public String getTotalTime() {
         return totalTime;
     }
 
-    public void setTotalTime(long totalTime) {
+    public void setTotalTime(String totalTime) {
         this.totalTime = totalTime;
     }
 
-    public long getPerformedOn() {
+    public String getPerformedOn() {
         return performedOn;
     }
 
-    public void setPerformedOn(long performedOn) {
+    public void setPerformedOn(String performedOn) {
         this.performedOn = performedOn;
     }
 
-    public long getTimeRemaining() {
+    public String getTimeRemaining() {
         return timeRemaining;
     }
 
-    public void setTimeRemaining(long timeRemaining) {
+    public void setTimeRemaining(String timeRemaining) {
         this.timeRemaining = timeRemaining;
     }
 
@@ -98,5 +104,47 @@ public class Progress {
 
     public void setCertain(int certain) {
         this.certain = certain;
+    }
+
+    public String getTotalSize() {
+        return totalSize;
+    }
+
+    public void setTotalSize(String totalSize) {
+        this.totalSize = totalSize;
+    }
+
+    public String getDoneSize() {
+        return doneSize;
+    }
+
+    public void setDoneSize(String doneSize) {
+        this.doneSize = doneSize;
+    }
+
+    public String getRemainSize() {
+        return remainSize;
+    }
+
+    public void setRemainSize(String remainSize) {
+        this.remainSize = remainSize;
+    }
+
+    @Override
+    public String toString() {
+        return "Progress{" +
+                "totalTime='" + totalTime + '\'' +
+                ", performedOn='" + performedOn + '\'' +
+                ", timeRemaining='" + timeRemaining + '\'' +
+                ", totalFileSize=" + totalFileSize +
+                ", totalSize='" + totalSize + '\'' +
+                ", sizeDone=" + sizeDone +
+                ", doneSize='" + doneSize + '\'' +
+                ", remainingSize=" + remainingSize +
+                ", remainSize='" + remainSize + '\'' +
+                ", speed='" + speed + '\'' +
+                ", percentage='" + percentage + '\'' +
+                ", certain=" + certain +
+                '}';
     }
 }

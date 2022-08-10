@@ -28,7 +28,7 @@ public class SpringMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("").setViewName("upload_spring_mvc_with_progress_interval");
+        registry.addViewController("").setViewName("upload_spring_mvc_with_progress");
     }
 
     @Bean
