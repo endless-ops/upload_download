@@ -5,6 +5,7 @@
     <title>基于Spring MVC的带有进度条效果的文件上传</title>
     <link rel="stylesheet" href="./css/common.css" />
     <link rel="stylesheet" href="./css/progress.css" />
+    <link rel="stylesheet" href="./css/progress_interval.css" />
 </head>
 <body>
 <div class="upload_pos">
@@ -29,6 +30,8 @@
                 <div class="progress_top" id="progress_top"></div>
                 <div class="progress_num">
                     <span class="progress_num_show" id="progress_num_show">0%</span>
+                    <span class="progress_num_show mg-lr" id="progress_time_show">00:00:00/00:00:00</span>
+                    <span class="progress_num_show pos-r" id="progress_size_show">0B/0B</span>
                 </div>
             </div>
         </div>
@@ -36,6 +39,6 @@
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="./js/open_jquery.js"></script>
-<script type="text/javascript" src="./js/progressBar_jquery.js"></script>
+<script type="text/javascript" src="./js/progressBar_interval.js"></script>
 </body>
 </html>

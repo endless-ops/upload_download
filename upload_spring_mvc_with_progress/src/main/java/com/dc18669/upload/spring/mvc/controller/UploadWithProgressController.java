@@ -1,5 +1,6 @@
 package com.dc18669.upload.spring.mvc.controller;
 
+import com.dc18669.upload.spring.mvc.utils.ToolUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,20 +25,16 @@ public class UploadWithProgressController {
         }
 
         if (isMkdirs) {
-            f = new File(uploadPath, createFileName(Objects.requireNonNull(file.getOriginalFilename())));
+            f = new File(uploadPath, ToolUtils.createFileName(Objects.requireNonNull(file.getOriginalFilename())));
             file.transferTo(f);
             return "上传成功";
         } else {
             return "上传失败";
         }
-
-
     }
 
-    private String createFileName(String oldFileName) {
-        String first = "New_Upload" + System.currentTimeMillis();
-        String suffix = oldFileName.substring(oldFileName.lastIndexOf('.'));
-        return first + suffix;
-    }
+
+
+    
 
 }

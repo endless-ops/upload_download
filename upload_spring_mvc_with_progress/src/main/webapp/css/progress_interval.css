@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+.progress_num {
+    width: 230px;
+    top: 12px;
+    left: 127px;
+}
+
+.progress_num_show {
+    position: absolute;
+    font-size: 8px;
+    color: #959191;
+}
+
+.progress_num .mg-lr {
+    left: 61px;
+}
+
+.progress_num .pos-r {
+    right: 0;
+}
