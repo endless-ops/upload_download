@@ -27,13 +27,13 @@ $(function () {
         let formData = new FormData();
         formData.append("file", files[0]);
 
-        upload("upload_with_progress_bar_servlet", "POST", formData, function (e) {
+        upload("upload_with_progress_bar", "POST", formData, function (e) {
             //上传进度监听处理
             // console.log(e.total);
             // console.log(e.loaded);
             let width = $("#progress_bottom").width();
             console.log(width);
-            let percentage = Math.floor((e.loaded / e.total) * 100);
+            let percentage = Math.floor((e.loaded / e.total) * 10000) / 100;
             $("#progress_top").css('width',(width * (percentage / 100)) + 'px');
             $("#progress_num_show").text(percentage + '%');
         })
