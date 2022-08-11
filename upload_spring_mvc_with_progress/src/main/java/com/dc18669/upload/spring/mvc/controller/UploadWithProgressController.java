@@ -17,7 +17,7 @@ public class UploadWithProgressController {
 
     @RequestMapping("upload_with_progress_bar")
     @ResponseBody
-    public String upload(MultipartFile file) throws IOException {
+    public String upload(MultipartFile file, HttpSession session) throws IOException {
         System.out.println("=========================请求成功=================================");
         String uploadPath = "G:\\upload\\";
         File f = new File(uploadPath);
@@ -29,9 +29,10 @@ public class UploadWithProgressController {
         if (isMkdirs) {
             f = new File(uploadPath, ToolUtils.createFileName(Objects.requireNonNull(file.getOriginalFilename())));
             file.transferTo(f);
-            return "上传成功";
+            session.removeAttribute("progress");
+            return "success";
         } else {
-            return "上传失败";
+            return "failed";
         }
     }
 
@@ -42,7 +43,4 @@ public class UploadWithProgressController {
         System.out.println("====================请求获取进度========================");
         return (Progress) session.getAttribute("progress");
     }
-
-
-
 }

@@ -20,6 +20,8 @@ public class UDProgressListener implements ProgressListener {
     private final static long MS_MINUTE = 60 * 1000;
     private final static long MS_SECOND = 1000;
 
+    private String timeRemaining;
+
 
     private HttpSession session;
 
@@ -41,31 +43,48 @@ public class UDProgressListener implements ProgressListener {
         long end = System.currentTimeMillis();
         Progress progress = new Progress();
 
-        // 文件总大小
-        progress.setTotalFileSize(l1);
-        // 已进行大小
-        progress.setSizeDone(l);
-        // 剩余大小
-        progress.setRemainingSize((l1 - l));
-        // 已进行时间
-        progress.setPerformedOn(calPerformedOn(end, session));
-        // 下载速度
-        progress.setSpeed(getSpeed(0, l, session, end));
-        // 百分比
-        String percentage = String.format("%.2f", ((l * 1.0 / l1) * 100));
-        System.out.println("percentage = " + percentage);
-        progress.setPercentage(percentage + "%");
-        // 总耗时
-        progress.setTotalTime("");
-        // 剩余时间
-        progress.setTimeRemaining("");
         // 已解析到第几个
         progress.setCertain(i);
+
+        // 文件总大小 字节
+        progress.setTotalFileSize(l1);
+        progress.setTotalSize(getSize(calculate(l1)));
+
+        // 已进行大小
+        progress.setSizeDone(l);
+        progress.setDoneSize(getSize(calculate(l)));
+
+        // 剩余大小
+        progress.setRemainingSize((l1 - l));
+        progress.setRemainSize(getSize(calculate((l1 - l))));
+
+        // 百分比
+        String percentage = String.format("%.2f", ((l * 1.0 / l1) * 100));
+        progress.setPercentage(percentage + "%");
+
+        // 已进行时间
+        progress.setPerformedOn(calPerformedOn(end, session));
+
+
+
+        /*  以下三个需要重新设计 */
+        // 下载速度
+        progress.setSpeed(getSpeed(0, l, session, end));
+
+        // 总耗时
+        progress.setTotalTime(calTotalTime(session, l1, end, l));
+        // 剩余时间
+        progress.setTimeRemaining(timeRemaining);
+
+
+        System.out.println(progress);
 
         session.setAttribute("progress", progress);
     }
 
     /**
+     * -将字节 转换为 字节、千字节、兆字节以及吉字节
+     *
      * @param bytes 字节
      * @return 返回 千字节、兆字节和吉字节
      */
@@ -91,7 +110,7 @@ public class UDProgressListener implements ProgressListener {
     }
 
     /**
-     * -计算时间差
+     * -将毫秒转换为 时分秒
      *
      * @param time1   时间1
      * @param time2   时间2
@@ -102,6 +121,11 @@ public class UDProgressListener implements ProgressListener {
     public String calTime(long time1, HttpSession session, long time2, int type) {
         String calTime = null;
         long ms = 0;
+        long hour = 0;
+        long hour_mod = 0;
+        long minute = 0;
+        long minute_mod = 0;
+        long second = 0;
 
         if (1 == type) {
             if (session != null) {
@@ -114,30 +138,25 @@ public class UDProgressListener implements ProgressListener {
             ms = time1;
         }
 
-        long hour = 0;
-        long hour_mod = 0;
         if (ms >= MS_HOUR) {
             hour = ms / MS_HOUR;
             hour_mod = ms - MS_HOUR * hour;
         }
 
-        long minute = 0;
-        long minute_mod = 0;
+
         if (hour_mod >= MS_MINUTE) {
             minute = hour_mod / MS_MINUTE;
             minute_mod = hour_mod - MS_MINUTE * minute;
-            hour_mod = 0;
-        } else if (ms >= MS_MINUTE) {
+        } else if (hour_mod >= MS_SECOND) {
+            second = hour_mod / MS_SECOND;
+        } else if (ms >= MS_MINUTE && ms < MS_HOUR) {
             minute = ms / MS_MINUTE;
             minute_mod = ms - MS_MINUTE * minute;
         }
 
-        long second = 0;
-        if (hour_mod >= MS_SECOND) {
-            second = hour_mod / MS_SECOND;
-        } else if (minute_mod >= MS_SECOND) {
+        if (minute_mod >= MS_SECOND) {
             second = minute_mod / MS_SECOND;
-        } else if (ms >= MS_SECOND) {
+        } else if (ms >= MS_SECOND && ms < MS_MINUTE) {
             second = ms / MS_SECOND;
         }
 
@@ -167,6 +186,8 @@ public class UDProgressListener implements ProgressListener {
     }
 
     /**
+     * - 计算剩余时间
+     *
      * @param time1 目前时间
      * @param time2 总时间
      * @param type  type的值为2
@@ -177,7 +198,7 @@ public class UDProgressListener implements ProgressListener {
     }
 
     /**
-     * -
+     * -获取已经上传或下载的时间
      *
      * @param time1   目前时间
      * @param session 开始上传时的时间
@@ -188,20 +209,94 @@ public class UDProgressListener implements ProgressListener {
     }
 
 
+    /**
+     * -计算速度
+     *
+     * @param startSize
+     * @param endSize
+     * @param session
+     * @param endTime
+     * @return
+     */
     protected Map<String, Object> calSpeed(long startSize, long endSize, HttpSession session, long endTime) {
         Map<String, Object> map = calculate(endSize);
         Map<String, Object> m = new HashMap<>();
         long start = (long) session.getAttribute("start");
-        double speed = (double) map.get("cal") / (endTime - start) / 1000;
+        long timeDifference = (endTime - start) / 1000;
+        double speed = (double) map.get("cal") / timeDifference;
         m.put("speed", speed);
         m.put("unit", map.get("unit"));
         return m;
     }
 
+    /**
+     * -计算速度
+     *
+     * @param startSize
+     * @param endSize
+     * @param session
+     * @param endTime
+     * @return
+     */
     protected String getSpeed(long startSize, long endSize, HttpSession session, long endTime) {
         Map<String, Object> map = calSpeed(startSize, endSize, session, endTime);
         double speed = (double) map.get("speed");
         String unit = (String) map.get("unit");
-        return speed + unit + "/s";
+        return String.format("%.2f", speed) + unit + "/s";
     }
+
+    /**
+     * -获取带有单位的大小
+     *
+     * @param map 计算后的大小
+     * @return 返回 转换后的大小
+     */
+    protected String getSize(Map<String, Object> map) {
+        double size = (double) map.get("cal");
+        String unit = (String) map.get("unit");
+        return String.format("%.2f", size) + unit;
+    }
+
+    /**
+     * -总耗时
+     *
+     * @param session
+     * @param totalSize
+     * @param endTime
+     * @param endSize
+     * @return
+     */
+    protected String calTotalTime(HttpSession session, long totalSize, long endTime, long endSize) {
+        long start = (long) session.getAttribute("start");
+        System.out.println("start : " + start);
+        long timeDifference = (endTime - start) / 1000;
+        System.out.println("timeDifference : " + timeDifference);
+        double speed = endSize * 1.0 / timeDifference;
+        System.out.println("speed : " + speed);
+        double v = totalSize / speed;
+        System.out.println("v : " + v);
+        long tt = (long) v;
+        System.out.println("总耗时 ：" + tt);
+
+        timeRemaining = calTimeRemain(session, endTime, tt);
+
+        return calTime(tt, null, 0, 3);
+    }
+
+
+    /**
+     * -剩余时间
+     *
+     * @param session
+     * @param endTime
+     * @param totalTime
+     * @return
+     */
+    protected String calTimeRemain(HttpSession session, long endTime, long totalTime) {
+        long start = (long) session.getAttribute("start");
+        return calTimeRemaining((endTime - start), totalTime, 2);
+    }
+
+
+    // 总耗时、速度、剩余时间 都需要重新设计
 }

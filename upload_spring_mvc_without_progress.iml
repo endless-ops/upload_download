@@ -9,7 +9,6 @@
         <webroots>
           <root url="file://$MODULE_DIR$/upload_spring_mvc_without_progress/src/main/webapp" relative="/" />
         </webroots>
-        <sourceRoots />
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
