@@ -1,0 +1,95 @@
+1. 在POST请求中，当 data的 值 为 {} 对象，而且 contentType 使用默认时， controller 可以不使用 @RequestBody
+    $(function () {
+
+
+        function uploadFile(url, method, params, func) {
+            $.ajax({
+                url: url,
+                type: method,
+                datatype: 'json',
+                // contentType: 'application/json;charset=utf-8',
+                data: params,
+                success: function (data) {
+                    console.log(data);
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("jqXHR : " + XMLHttpRequest);
+                    console.log("textStatus : " + textStatus);
+                    console.log("errorThrown : " + errorThrown);
+                }
+            })
+        }
+
+
+        $("#upload_submit_btn").on('click', function () {
+            uploadFile('upload_progress', "POST", {performedOn:'00:00:00'}, function () {
+
+            });
+        })
+    })
+
+2. 在POST请求中，当 data的 值 为 {} 对象，而且 contentType 是 'application/json;charset=utf-8' 时，
+    controller 不使用 @RequestBody时，后端接收不到值，使用 @RequestBody时 ，直接报错
+
+    $(function () {
+
+
+        function uploadFile(url, method, params, func) {
+            $.ajax({
+                url: url,
+                type: method,
+                datatype: 'json',
+                contentType: 'application/json;charset=utf-8',
+                data: params,
+                success: function (data) {
+                    console.log(data);
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("jqXHR : " + XMLHttpRequest);
+                    console.log("textStatus : " + textStatus);
+                    console.log("errorThrown : " + errorThrown);
+                }
+            })
+        }
+
+
+        $("#upload_submit_btn").on('click', function () {
+            uploadFile('upload_progress', "POST", {performedOn:'00:00:00'}, function () {
+
+            });
+        })
+    })
+
+
+
+3. 在POST请求中，当 data的 值 为 JSON 字符串时，而且 contentType 是 'application/json;charset=utf-8' 时，
+   controller 使用 @RequestBody时，后端可以接收到值；不使用 @RequestBody时 ，后端接收不到值
+
+   $(function () {
+
+
+       function uploadFile(url, method, params, func) {
+           $.ajax({
+               url: url,
+               type: method,
+               datatype: 'json',
+               contentType: 'application/json;charset=utf-8',
+               data: JSON.stringify(params),
+               success: function (data) {
+                   console.log(data);
+               },
+               error:function (XMLHttpRequest, textStatus, errorThrown) {
+                   console.log("jqXHR : " + XMLHttpRequest);
+                   console.log("textStatus : " + textStatus);
+                   console.log("errorThrown : " + errorThrown);
+               }
+           })
+       }
+
+
+       $("#upload_submit_btn").on('click', function () {
+           uploadFile('upload_progress', "POST", {performedOn:'00:00:00'}, function () {
+
+           });
+       })
+   })

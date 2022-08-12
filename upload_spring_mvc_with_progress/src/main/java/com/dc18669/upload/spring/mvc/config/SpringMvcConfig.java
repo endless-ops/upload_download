@@ -34,12 +34,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 @Configuration
 @EnableWebMvc
@@ -90,16 +86,11 @@ public class SpringMvcConfig implements WebMvcConfigurer {
     }
 
     @Override
-    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-        MappingJackson2HttpMessageConverter mapJacksonConverter = new MappingJackson2HttpMessageConverter();
-        List<MediaType> mediaTypesList = new LinkedList<MediaType>();
-        // 到这一步发现此方法接受List<MediaType>参数，然后又是一番尝试 o(╯□╰)o
-        // List 只是一个接口，意味着不能通过LIst<Object> list=new List<Object> ()  实例化，需要给List赋一个子类对象， 比如LinkedList；
-        mediaTypesList.add(MediaType.APPLICATION_JSON_UTF8);
-        mediaTypesList.add(MediaType.TEXT_HTML);
-        mapJacksonConverter.setSupportedMediaTypes(mediaTypesList);
-        converters.add(mapJacksonConverter);
-
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder()
+                .indentOutput(true)
+                .dateFormat(new SimpleDateFormat("yyyy-MM-dd"))
+                .modulesToInstall(new ParameterNamesModule());
+        converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
     }
-
 }

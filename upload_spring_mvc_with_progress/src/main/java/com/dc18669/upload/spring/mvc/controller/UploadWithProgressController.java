@@ -1,7 +1,9 @@
 package com.dc18669.upload.spring.mvc.controller;
 
+import com.dc18669.upload.spring.mvc.bean.Progress;
 import com.dc18669.upload.spring.mvc.utils.ToolUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,5 +34,14 @@ public class UploadWithProgressController {
         } else {
             return "failed";
         }
+    }
+
+
+    @ResponseBody
+    @RequestMapping("upload_progress")
+    public Progress getProgress (Progress progress) {
+        System.out.println("================" + progress.getPerformedOn());
+        progress.setSpeed("123312345");
+        return progress;
     }
 }
