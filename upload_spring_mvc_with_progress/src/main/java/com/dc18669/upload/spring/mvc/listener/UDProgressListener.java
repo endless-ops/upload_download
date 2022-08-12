@@ -29,6 +29,9 @@ public class UDProgressListener implements ProgressListener {
         this.session = session;
         System.out.println("session 当前时间 ：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         this.session.setAttribute("start", System.currentTimeMillis());
+
+        Progress progress = new Progress();
+        this.session.setAttribute("progress", progress);
     }
 
     /**
@@ -41,10 +44,10 @@ public class UDProgressListener implements ProgressListener {
     @Override
     public void update(long l, long l1, int i) {
         long end = System.currentTimeMillis();
-        Progress progress = new Progress();
+        Progress progress = (Progress) this.session.getAttribute("progress");
 
         // 已解析到第几个
-        progress.setCertain(i);
+//        progress.setCertain(i);
 
         // 文件总大小 字节
         progress.setTotalFileSize(l1);
@@ -61,6 +64,7 @@ public class UDProgressListener implements ProgressListener {
         // 百分比
         String percentage = String.format("%.2f", ((l * 1.0 / l1) * 100));
         progress.setPercentage(percentage + "%");
+        System.out.println("当前进度 ： " + percentage);
 
         // 已进行时间
         progress.setPerformedOn(calPerformedOn(end, session));
@@ -69,17 +73,17 @@ public class UDProgressListener implements ProgressListener {
 
         /*  以下三个需要重新设计 */
         // 下载速度
-        progress.setSpeed(getSpeed(0, l, session, end));
+        // progress.setSpeed(getSpeed(0, l, session, end));
 
         // 总耗时
-        progress.setTotalTime(calTotalTime(session, l1, end, l));
+        // progress.setTotalTime(calTotalTime(session, l1, end, l));
         // 剩余时间
-        progress.setTimeRemaining(timeRemaining);
+        // progress.setTimeRemaining(timeRemaining);
 
 
-        System.out.println(progress);
+        // System.out.println(progress);
 
-        session.setAttribute("progress", progress);
+//        session.setAttribute("progress", progress);
     }
 
     /**

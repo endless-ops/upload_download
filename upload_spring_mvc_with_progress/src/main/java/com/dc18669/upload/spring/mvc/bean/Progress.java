@@ -136,7 +136,15 @@ public class Progress {
                 "totalTime='" + totalTime + '\'' +
                 ", performedOn='" + performedOn + '\'' +
                 ", timeRemaining='" + timeRemaining + '\'' +
+                ", totalFileSize=" + totalFileSize +
+                ", totalSize='" + totalSize + '\'' +
+                ", sizeDone=" + sizeDone +
+                ", doneSize='" + doneSize + '\'' +
+                ", remainingSize=" + remainingSize +
+                ", remainSize='" + remainSize + '\'' +
                 ", speed='" + speed + '\'' +
+                ", percentage='" + percentage + '\'' +
+                ", certain=" + certain +
                 '}';
     }
 }

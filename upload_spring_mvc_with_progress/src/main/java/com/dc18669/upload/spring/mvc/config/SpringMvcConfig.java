@@ -12,11 +12,15 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -29,9 +33,11 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,28 +91,15 @@ public class SpringMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-        Optional<HttpMessageConverter<?>> optional = converters.stream()
-                .filter(o -> o instanceof MappingJackson2HttpMessageConverter)
-                .findFirst();
-        if (optional.isPresent()) {
-            MappingJackson2HttpMessageConverter converter =
-                    (MappingJackson2HttpMessageConverter) optional.get();
-            ObjectMapper mapper = converter.getObjectMapper();
-            JavaTimeModule javaTimeModule = new JavaTimeModule();
-            javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            mapper.configure(MapperFeature.IGNORE_DUPLICATE_MODULE_REGISTRATIONS, false);
-            mapper.registerModule(javaTimeModule);
-            mapper.configure(MapperFeature.IGNORE_DUPLICATE_MODULE_REGISTRATIONS, true);
-            mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-            mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            mapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, false);
-            mapper.configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true);
-            mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        }
+        MappingJackson2HttpMessageConverter mapJacksonConverter = new MappingJackson2HttpMessageConverter();
+        List<MediaType> mediaTypesList = new LinkedList<MediaType>();
+        // 到这一步发现此方法接受List<MediaType>参数，然后又是一番尝试 o(╯□╰)o
+        // List 只是一个接口，意味着不能通过LIst<Object> list=new List<Object> ()  实例化，需要给List赋一个子类对象， 比如LinkedList；
+        mediaTypesList.add(MediaType.APPLICATION_JSON_UTF8);
+        mediaTypesList.add(MediaType.TEXT_HTML);
+        mapJacksonConverter.setSupportedMediaTypes(mediaTypesList);
+        converters.add(mapJacksonConverter);
+
     }
 
 }

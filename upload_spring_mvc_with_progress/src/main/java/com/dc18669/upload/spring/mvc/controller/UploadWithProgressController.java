@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
@@ -34,13 +35,5 @@ public class UploadWithProgressController {
         } else {
             return "failed";
         }
-    }
-
-
-    @RequestMapping("upload_progress")
-    @ResponseBody
-    public Progress getProgress(HttpSession session) {
-        System.out.println("====================请求获取进度========================");
-        return (Progress) session.getAttribute("progress");
     }
 }
