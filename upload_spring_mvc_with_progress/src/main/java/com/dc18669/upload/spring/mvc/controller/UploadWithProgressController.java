@@ -39,7 +39,7 @@ public class UploadWithProgressController {
 
     @ResponseBody
     @RequestMapping("upload_progress")
-    public Progress getProgress (Progress progress) {
+    public Progress getProgress (@RequestBody Progress progress) {
         System.out.println("================" + progress.getPerformedOn());
         progress.setSpeed("123312345");
         return progress;

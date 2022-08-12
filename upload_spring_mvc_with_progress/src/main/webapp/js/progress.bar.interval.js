@@ -6,7 +6,7 @@ $(function () {
             url: url,
             type: method,
             datatype: 'json',
-            contentType: 'application/json;charset=utf-8',
+            // contentType: 'application/json;charset=utf-8',
             data: JSON.stringify(params),
             success: function (data) {
                 console.log(data);
