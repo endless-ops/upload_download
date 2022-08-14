@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="download_spring_mvc_with_progress" />
         <module name="upload_spring_mvc_with_progress" />
+        <module name="upload_spring_mvc_with_progress_interval" />
         <module name="download_spring_mvc_without_progress" />
         <module name="upload_spring_mvc_without_progress" />
       </profile>

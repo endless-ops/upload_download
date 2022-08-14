@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+.upload_progress_wrapper {
+    height: 200px;
+}
+
+.progress_title {
+    padding: 40px 126px 10px 126px;
+}
+
+.progress_title p {
+    font-size: 13px;
+    color: #816f6f;
+}
+
+.progress_im {
+    height: 50px;
+    position: relative;
+}
+
+.progress_bottom {
+    position: absolute;
+    height: 10px;
+    width: 230px;
+    background-color: darkgray;
+    left: 127px;
+    border-radius: 5px;
+    border: none;
+}
+
+.progress_top {
+    position: absolute;
+    height: 10px;
+    left: 127px;
+    background-color: blue;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+}
+
+.progress_num {
+    position: absolute;
+    left: 363px;
+    top: -8px;
+}
+
+.progress_num .progress_num_show {
+    font-size: 10px;
+    color: #816f6f;
+}

@@ -5,6 +5,7 @@
     <file type="web" url="file://$PROJECT_DIR$/download_spring_mvc_with_progress" />
     <file type="web" url="file://$PROJECT_DIR$/download_spring_mvc_without_progress" />
     <file type="web" url="file://$PROJECT_DIR$/upload_spring_mvc_with_progress" />
+    <file type="web" url="file://$PROJECT_DIR$/upload_spring_mvc_with_progress_interval" />
     <file type="web" url="file://$PROJECT_DIR$/upload_spring_mvc_without_progress" />
   </component>
   <component name="MavenProjectsManager">
@@ -14,6 +15,7 @@
         <option value="$PROJECT_DIR$/download_spring_mvc_with_progress/pom.xml" />
         <option value="$PROJECT_DIR$/upload_spring_mvc_without_progress/pom.xml" />
         <option value="$PROJECT_DIR$/upload_spring_mvc_with_progress/pom.xml" />
+        <option value="$PROJECT_DIR$/upload_spring_mvc_with_progress_interval/pom.xml" />
       </list>
     </option>
   </component>

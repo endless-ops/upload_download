@@ -21,42 +21,55 @@ public class UDProgressListener implements ProgressListener {
 
     public void setSession(HttpSession session) {
         this.session = session;
+        Progress progress = new Progress();
+        this.session.setAttribute("progress", progress);
+
+
+        System.out.println("UDProgressListener session  : " + this.session);
         System.out.println("session 当前时间 ：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         this.session.setAttribute("start", System.currentTimeMillis());
 
-        Progress progress = new Progress();
-        this.session.setAttribute("progress", progress);
+
     }
 
     /**
      * 更新进度
      *
-     * @param l  已读取了多少个字节
-     * @param l1 文件总大小
-     * @param i  已解析到第几个
+     * @param pBytesRead  已读取了多少个字节
+     * @param pContentLength 文件总大小
+     * @param pItems  已解析到第几个
      */
     @Override
-    public void update(long l, long l1, int i) {
+    public void update(long pBytesRead, long pContentLength, int pItems) {
         long end = System.currentTimeMillis();
         Progress progress = (Progress) this.session.getAttribute("progress");
 
+        progress.setpBytesRead(pBytesRead);
+        progress.setpContentLength(pContentLength);
+        progress.setpItems(pItems);
+
+
+
+
+
+
         // 已解析到第几个
-        progress.setCertain(i);
+        progress.setCertain(pItems);
 
         // 文件总大小 字节
-        progress.setTotalFileSize(l1);
-        progress.setTotalSize(ToolUtils.getSize(l1));
+        progress.setTotalFileSize(pContentLength);
+        progress.setTotalSize(ToolUtils.getSize(pContentLength));
 
         // 已进行大小
-        progress.setSizeDone(l);
-        progress.setDoneSize(ToolUtils.getSize(l));
+        progress.setSizeDone(pBytesRead);
+        progress.setDoneSize(ToolUtils.getSize(pBytesRead));
 
         // 剩余大小
-        progress.setRemainingSize((l1 - l));
-        progress.setRemainSize(ToolUtils.getSize(l1 - l));
+        progress.setRemainingSize((pContentLength - pBytesRead));
+        progress.setRemainSize(ToolUtils.getSize(pContentLength - pBytesRead));
 
         // 百分比
-        progress.setPercentage(ToolUtils.getPercentage(l, l1));
+        progress.setPercentage(ToolUtils.getPercentage(pBytesRead, pContentLength));
 
         // 已进行时间
         progress.setPerformedOn(ToolUtils.calPerformedOn(end, (Long) session.getAttribute("start")));

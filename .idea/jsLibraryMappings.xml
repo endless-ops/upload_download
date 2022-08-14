@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
+    <file url="file://$PROJECT_DIR$/download_servlet_with_progress" libraries="{jquery-3.6.0}" />
+    <file url="file://$PROJECT_DIR$/download_servlet_without_progress" libraries="{jquery-3.6.0}" />
+    <file url="file://$PROJECT_DIR$/download_spring_mvc_with_progress" libraries="{jquery-3.6.0}" />
+    <file url="file://$PROJECT_DIR$/download_spring_mvc_without_progress" libraries="{jquery-3.6.0}" />
+    <file url="file://$PROJECT_DIR$/upload_servlet_with_progress" libraries="{jquery-3.6.0}" />
+    <file url="file://$PROJECT_DIR$/upload_servlet_without_progress" libraries="{jquery-3.6.0}" />
     <file url="file://$PROJECT_DIR$/upload_spring_mvc_with_progress" libraries="{jquery-3.6.0}" />
+    <file url="file://$PROJECT_DIR$/upload_spring_mvc_with_progress_interval" libraries="{jquery-3.6.0}" />
     <file url="file://$PROJECT_DIR$/upload_spring_mvc_without_progress" libraries="{jquery-3.6.0}" />
   </component>
 </project>

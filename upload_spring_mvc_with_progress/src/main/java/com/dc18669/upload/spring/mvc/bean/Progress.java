@@ -1,6 +1,11 @@
 package com.dc18669.upload.spring.mvc.bean;
 
 public class Progress {
+
+    private long pBytesRead;
+    private long pContentLength;
+    private int pItems;
+
     // 总耗时
     private String totalTime;
 
@@ -133,18 +138,33 @@ public class Progress {
     @Override
     public String toString() {
         return "Progress{" +
-                "totalTime='" + totalTime + '\'' +
-                ", performedOn='" + performedOn + '\'' +
-                ", timeRemaining='" + timeRemaining + '\'' +
-                ", totalFileSize=" + totalFileSize +
-                ", totalSize='" + totalSize + '\'' +
-                ", sizeDone=" + sizeDone +
-                ", doneSize='" + doneSize + '\'' +
-                ", remainingSize=" + remainingSize +
-                ", remainSize='" + remainSize + '\'' +
-                ", speed='" + speed + '\'' +
-                ", percentage='" + percentage + '\'' +
-                ", certain=" + certain +
+                "pBytesRead=" + pBytesRead +
+                ", pContentLength=" + pContentLength +
+                ", pItems=" + pItems +
                 '}';
+    }
+
+    public long getpBytesRead() {
+        return pBytesRead;
+    }
+
+    public void setpBytesRead(long pBytesRead) {
+        this.pBytesRead = pBytesRead;
+    }
+
+    public long getpContentLength() {
+        return pContentLength;
+    }
+
+    public void setpContentLength(long pContentLength) {
+        this.pContentLength = pContentLength;
+    }
+
+    public int getpItems() {
+        return pItems;
+    }
+
+    public void setpItems(int pItems) {
+        this.pItems = pItems;
     }
 }
